@@ -1,0 +1,27 @@
+<mat-card class="form-container">
+    <h3 class="post-form-heading">Create Post Here...</h3>
+    <form class="example-form" [formGroup]="postCreateForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>Post Title</mat-label>
+            <input matInput placeholder="Title..." formControlName="post_title">
+            <mat-error *ngIf="postCreateForm.get('post_title')?.invalid && postCreateForm.get('post_title')?.touched">
+                Please enter a Title...
+            </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Post Description</mat-label>
+            <textarea matInput placeholder="Decription..." formControlName="post_description"></textarea>
+            <mat-error
+                *ngIf="postCreateForm.get('post_description')?.invalid && postCreateForm.get('post_description')?.touched">
+                Please enter Description...
+            </mat-error>
+        </mat-form-field>
+        <div class="form-btn">
+            <button mat-raised-button color="primary" (click)="addPost()">Save</button>&nbsp;
+            <button mat-raised-button color="warn">Reset</button>
+        </div>
+    </form>
+</mat-card>
+<app-posts-list></app-posts-list>
