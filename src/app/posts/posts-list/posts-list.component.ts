@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Post } from 'src/app/models/post.model';
+import { Observable, Subscription } from 'rxjs';
 import { PostService } from '../post-service/post.service';
 
 @Component({
@@ -11,14 +10,17 @@ import { PostService } from '../post-service/post.service';
 export class PostsListComponent implements OnInit, OnDestroy {
   $postSubsciption!: Subscription;
   panelOpenState = false;
-  postsList: Post[] = [];
+  postsList!: Observable<any>;
   constructor(private _postService: PostService) {
+  }
+  ngOnInit(): void {
+    this.postsList = this._postService.getPosts();
     this.$postSubsciption = this._postService.postAddTrigger.subscribe(() => {
       this.postsList = this._postService.getPosts();
     });
   }
-  ngOnInit(): void {
-
+  trackPost(index: number, post: any) {
+    return post;
   }
   ngOnDestroy(): void {
     if (this.$postSubsciption) {

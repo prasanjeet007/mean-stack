@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Post } from 'src/app/models/post.model';
@@ -8,12 +9,11 @@ import { Post } from 'src/app/models/post.model';
 export class PostService {
   private posts: Post[] = [];
   postAddTrigger = new Subject();
-  constructor() { }
+  constructor(private _httpService: HttpClient) { }
   getPosts() {
-    return [...this.posts];
+    return this._httpService.get("http://localhost:3000/getposts");
   }
   addPosts(title: string, content: string) {
-    const post: Post = { post_title: title, post_description: content };
-    this.posts.push(post);
+    return this._httpService.post("http://localhost:3000/createpost", { title, description: content });
   }
 }

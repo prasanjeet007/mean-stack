@@ -23,9 +23,10 @@ export class PostCreateComponent {
   addPost() {
     if (!this.postCreateForm.value.post_title || !this.postCreateForm.value.post_description)
       return;
-    // this.postData = this.postCreateForm.value;
-    this._postService.addPosts(this.postCreateForm.value.post_title, this.postCreateForm.value.post_description);
-    this._postService.postAddTrigger.next(true);
-    this.postCreateForm.reset();
+    this._postService.addPosts(this.postCreateForm.value.post_title, this.postCreateForm.value.post_description).subscribe((postResult) => {
+      this._postService.postAddTrigger.next(true);
+      this.postCreateForm.reset();
+    })
+
   }
 }
