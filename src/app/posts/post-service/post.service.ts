@@ -16,4 +16,7 @@ export class PostService {
   addPosts(title: string, content: string) {
     return this._httpService.post("http://localhost:3000/createpost", { title, description: content });
   }
+  deletePost(postId: string | undefined) {
+    return this._httpService.delete("http://localhost:3000/deletepost/" + postId);
+  }
 }

@@ -17,6 +17,10 @@ app.get("/getposts", async (req, res) => {
   const postResult = await Post.find();
   res.send(postResult);
 });
+app.delete("/deletepost/:id", async (req, res) => {
+  const postResult = await Post.findByIdAndDelete({ _id: req.params.id });
+  res.send(postResult);
+});
 app.listen(port, () => {
   console.log(`Server is running on the ${port} port`);
 });
