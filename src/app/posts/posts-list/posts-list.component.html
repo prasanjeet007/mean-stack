@@ -15,7 +15,9 @@
       </mat-expansion-panel-header>
       <p>{{ post?.description }}</p>
       <mat-action-row>
-        <button mat-raised-button color="primary">EDIT</button>
+        <button mat-raised-button color="primary" (click)="postEdit(post._id)">
+          EDIT
+        </button>
         <button mat-raised-button color="warn" (click)="deletePost(post)">
           DELETE
         </button>

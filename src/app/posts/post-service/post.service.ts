@@ -13,8 +13,14 @@ export class PostService {
   getPosts() {
     return this._httpService.get("http://localhost:3000/getposts");
   }
+  getPostById(id: string) {
+    return this._httpService.get("http://localhost:3000/getpost/" + id);
+  }
   addPosts(title: string, content: string) {
     return this._httpService.post("http://localhost:3000/createpost", { title, description: content });
+  }
+  editPost(id: string, title: string, description: string) {
+    return this._httpService.put("http://localhost:3000/updatepost/" + id, { title, description });
   }
   deletePost(postId: string | undefined) {
     return this._httpService.delete("http://localhost:3000/deletepost/" + postId);

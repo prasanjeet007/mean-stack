@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Post } from 'src/app/models/post.model';
 import { PostService } from '../post-service/post.service';
@@ -12,7 +13,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
   $postSubsciption!: Subscription;
   panelOpenState = false;
   postsList!: Observable<any>;
-  constructor(private _postService: PostService) {
+  constructor(private _postService: PostService, private _router: Router) {
   }
   ngOnInit(): void {
     this.postsList = this._postService.getPosts();
@@ -27,6 +28,10 @@ export class PostsListComponent implements OnInit, OnDestroy {
     this._postService.deletePost(post._id).subscribe((postResult) => {
       this.postsList = this._postService.getPosts();
     })
+  }
+  postEdit(id: string) {
+    console.log(id);
+    this._router.navigateByUrl('posts/edit/' + id);
   }
   ngOnDestroy(): void {
     if (this.$postSubsciption) {

@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { PostCreateComponent } from './post-create/post-create.component';
 
 const routes: Routes = [
-  { path: '', component: PostCreateComponent }
+  { path: '', component: PostCreateComponent },
+  { path: 'edit/:id', component: PostCreateComponent },
 ];
 
 @NgModule({
