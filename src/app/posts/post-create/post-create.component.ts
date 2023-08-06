@@ -37,7 +37,7 @@ export class PostCreateComponent {
   }
   addPost() {
     if (this.btnText === "Save") {
-      if (!this.postCreateForm.value.post_title || !this.postCreateForm.value.post_description)
+      if ((!this.postCreateForm.value.post_title || !this.postCreateForm.value.post_description) || (!this.postCreateForm.valid))
         return;
       this._postService.addPosts(this.postCreateForm.value.post_title, this.postCreateForm.value.post_description).subscribe((postResult) => {
         this._postService.postAddTrigger.next(true);
@@ -52,5 +52,12 @@ export class PostCreateComponent {
       });
     }
 
+  }
+  resetForm() {
+    this.createPostForm();
+    if (this.btnText === "Edit Data") {
+      this.btnText = "Save";
+      this._route.navigateByUrl('/');
+    }
   }
 }
