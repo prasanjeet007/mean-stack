@@ -14,6 +14,7 @@ export class PostCreateComponent {
   postData!: Post;
   btnText = "Save";
   postId!: string;
+  isLoading: boolean = false;
   constructor(private _postService: PostService, private _activatedRouterService: ActivatedRoute, private _route: Router) {
     this.createPostForm();
     this._activatedRouterService.params.subscribe((paramResponse) => {
@@ -39,12 +40,15 @@ export class PostCreateComponent {
     if (this.btnText === "Save") {
       if ((!this.postCreateForm.value.post_title || !this.postCreateForm.value.post_description) || (!this.postCreateForm.valid))
         return;
+      this.isLoading = true;
       this._postService.addPosts(this.postCreateForm.value.post_title, this.postCreateForm.value.post_description).subscribe((postResult) => {
+        this.isLoading = false;
         this._postService.postAddTrigger.next(true);
         this.postCreateForm.reset();
       })
     } else {
       this._postService.editPost(this.postId, this.postCreateForm.value.post_title, this.postCreateForm.value.post_description).subscribe((updatePostResponse) => {
+        this.isLoading = false;
         this._postService.postAddTrigger.next(true);
         this.postCreateForm.reset();
         this.btnText = "Save";

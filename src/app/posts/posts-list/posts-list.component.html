@@ -1,29 +1,36 @@
 <div class="posts-list">
-  <mat-accordion
-    multi="true"
-    *ngIf="(postsList | async)?.length > 0; else emptyList"
-  >
-    <mat-expansion-panel
-      *ngFor="let post of postsList | async as listPost; trackBy: trackPost"
-      (opened)="panelOpenState = true"
-      (closed)="panelOpenState = false"
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <ng-container *ngIf="!isLoading">
+    <mat-accordion
+      multi="true"
+      *ngIf="(postsList | async)?.length > 0; else emptyList"
     >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ post?.title }}
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <p>{{ post?.description }}</p>
-      <mat-action-row>
-        <button mat-raised-button color="primary" (click)="postEdit(post._id)">
-          EDIT
-        </button>
-        <button mat-raised-button color="warn" (click)="deletePost(post)">
-          DELETE
-        </button>
-      </mat-action-row>
-    </mat-expansion-panel>
-  </mat-accordion>
+      <mat-expansion-panel
+        *ngFor="let post of postsList | async as listPost; trackBy: trackPost"
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ post?.title }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>{{ post?.description }}</p>
+        <mat-action-row>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="postEdit(post._id)"
+          >
+            EDIT
+          </button>
+          <button mat-raised-button color="warn" (click)="deletePost(post)">
+            DELETE
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ng-container>
   <ng-template #emptyList>
     <p class="no-post-list">No posts are available...</p>
   </ng-template>

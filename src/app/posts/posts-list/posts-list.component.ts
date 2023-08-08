@@ -13,6 +13,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
   $postSubsciption!: Subscription;
   panelOpenState = false;
   postsList!: Observable<any>;
+  isLoading: boolean = false;
   constructor(private _postService: PostService, private _router: Router) {
   }
   ngOnInit(): void {
@@ -25,12 +26,13 @@ export class PostsListComponent implements OnInit, OnDestroy {
     return post;
   }
   deletePost(post: Post) {
+    this.isLoading = true;
     this._postService.deletePost(post._id).subscribe((postResult) => {
+      this.isLoading = false;
       this.postsList = this._postService.getPosts();
     })
   }
   postEdit(id: string) {
-    console.log(id);
     this._router.navigateByUrl('posts/edit/' + id);
   }
   ngOnDestroy(): void {

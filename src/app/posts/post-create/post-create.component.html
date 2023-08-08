@@ -1,6 +1,7 @@
 <mat-card class="form-container">
-  <h3 class="post-form-heading">Create Post Here...</h3>
-  <form class="example-form" [formGroup]="postCreateForm">
+  <h3 class="post-form-heading" *ngIf="!isLoading">Create Post Here...</h3>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form class="example-form" [formGroup]="postCreateForm" *ngIf="!isLoading">
     <mat-form-field class="example-full-width">
       <mat-label>Post Title</mat-label>
       <input matInput placeholder="Title..." formControlName="post_title" />
