@@ -33,7 +33,8 @@ export class PostCreateComponent {
   createPostForm() {
     this.postCreateForm = new FormGroup({
       post_title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(10)]),
-      post_description: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(30)])
+      post_description: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(30)]),
+      image: new FormControl(null, Validators.required)
     })
   }
   addPost() {
@@ -56,6 +57,11 @@ export class PostCreateComponent {
       });
     }
 
+  }
+  uploadFile(event: any) {
+    const file = event?.target?.files[0] as HTMLInputElement;
+    this.postCreateForm.patchValue({ image: file });
+    this.postCreateForm.get('image')?.updateValueAndValidity();
   }
   resetForm() {
     this.createPostForm();

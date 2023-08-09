@@ -40,3 +40,9 @@
 mat-spinner {
   margin: auto;
 }
+input[type="file"] {
+  visibility: hidden;
+}
+.image-picker {
+  display: flex;
+}
