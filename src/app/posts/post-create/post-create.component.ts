@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from 'src/app/models/post.model';
@@ -10,11 +10,13 @@ import { PostService } from '../post-service/post.service';
   styleUrls: ['./post-create.component.css']
 })
 export class PostCreateComponent {
+  @ViewChild('filePicker') filePicker!: ElementRef;
   postCreateForm!: FormGroup;
   postData!: Post;
   btnText = "Save";
   postId!: string;
   isLoading: boolean = false;
+  imagePreview!: string;
   constructor(private _postService: PostService, private _activatedRouterService: ActivatedRoute, private _route: Router) {
     this.createPostForm();
     this._activatedRouterService.params.subscribe((paramResponse) => {
@@ -58,10 +60,17 @@ export class PostCreateComponent {
     }
 
   }
-  uploadFile(event: any) {
-    const file = event?.target?.files[0] as HTMLInputElement;
-    this.postCreateForm.patchValue({ image: file });
-    this.postCreateForm.get('image')?.updateValueAndValidity();
+  uploadFile(event: any): boolean | void {
+    const file = event?.target?.files[0];
+    if (file?.type === 'image/png' || file?.type === 'image/jpg' || file?.type === 'image/jpeg') {
+      this.postCreateForm.patchValue({ image: file });
+      this.postCreateForm.get('image')?.updateValueAndValidity();
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      }
+      reader.readAsDataURL(file);
+    }
   }
   resetForm() {
     this.createPostForm();
@@ -69,5 +78,9 @@ export class PostCreateComponent {
       this.btnText = "Save";
       this._route.navigateByUrl('/');
     }
+  }
+  deleteImage() {
+    this.imagePreview = '';
+    this.filePicker.nativeElement.value = '';
   }
 }

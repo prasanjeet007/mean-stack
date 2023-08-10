@@ -6,6 +6,7 @@
   margin: 0 auto;
   background-color: #fff;
   text-align: center;
+  overflow: auto;
 }
 
 .post-form-heading {
@@ -45,4 +46,16 @@ input[type="file"] {
 }
 .image-picker {
   display: flex;
+}
+.image-preview {
+  display: flex;
+  height: 5rem;
+  margin: 1rem 0;
+}
+.image-preview img {
+  height: 100%;
+}
+.close-icon {
+  display: flex;
+  cursor: pointer;
 }
