@@ -9,5 +9,9 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+    required: true,
+  },
 });
 module.exports = mongoose.model("Post", postSchema);

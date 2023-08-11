@@ -16,8 +16,12 @@ export class PostService {
   getPostById(id: string) {
     return this._httpService.get("http://localhost:3000/getpost/" + id);
   }
-  addPosts(title: string, content: string) {
-    return this._httpService.post("http://localhost:3000/createpost", { title, description: content });
+  addPosts(title: string, content: string, image: File) {
+    const postData = new FormData();
+    postData.append('title', title);
+    postData.append('description', content);
+    postData.append('image', image, title)
+    return this._httpService.post("http://localhost:3000/createpost", postData);
   }
   editPost(id: string, title: string, description: string) {
     return this._httpService.put("http://localhost:3000/updatepost/" + id, { title, description });
