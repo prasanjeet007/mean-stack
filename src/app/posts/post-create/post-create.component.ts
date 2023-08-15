@@ -25,8 +25,10 @@ export class PostCreateComponent {
         this._postService.getPostById(paramResponse["id"]).subscribe((postResponse: any) => {
           this.postCreateForm.patchValue({
             post_title: postResponse.title,
-            post_description: postResponse.description
+            post_description: postResponse.description,
+            image: postResponse.image
           });
+          this.imagePreview = postResponse.image;
           this.btnText = "Edit Data";
         })
       }
@@ -51,10 +53,11 @@ export class PostCreateComponent {
         this.deleteImage();
       })
     } else {
-      this._postService.editPost(this.postId, this.postCreateForm.value.post_title, this.postCreateForm.value.post_description).subscribe((updatePostResponse) => {
+      this._postService.editPost(this.postId, this.postCreateForm.value.post_title, this.postCreateForm.value.post_description, this.postCreateForm.value.image).subscribe((updatePostResponse) => {
         this.isLoading = false;
         this._postService.postAddTrigger.next(true);
         this.postCreateForm.reset();
+        this.deleteImage();
         this.btnText = "Save";
         this._route.navigateByUrl('/posts');
       });

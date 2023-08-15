@@ -1,12 +1,21 @@
 .posts-list {
-    margin: 0 auto;
-    margin-top: 10px;
-    width: 90%;
+  margin: 0 auto;
+  margin-top: 10px;
+  width: 90%;
 }
 
 .no-post-list {
-    text-align: center;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: larger;
-    font-weight: bolder;
+  text-align: center;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: larger;
+  font-weight: bolder;
+}
+.post-image {
+  height: 200px;
+  width: 400px;
+}
+.post-image img {
+  border-radius: 20px;
+  width: 400px;
+  height: 200px;
 }

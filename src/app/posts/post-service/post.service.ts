@@ -23,8 +23,16 @@ export class PostService {
     postData.append('image', image, title)
     return this._httpService.post("http://localhost:3000/createpost", postData);
   }
-  editPost(id: string, title: string, description: string) {
-    return this._httpService.put("http://localhost:3000/updatepost/" + id, { title, description });
+  editPost(id: string, title: string, description: string, image: File | string) {
+    if (typeof (image) === 'string') {
+      return this._httpService.put("http://localhost:3000/updatepost/" + id, { title, description, image });
+    } else {
+      const fd = new FormData();
+      fd.append("title", title);
+      fd.append("description", description);
+      fd.append("image", image, title);
+      return this._httpService.put("http://localhost:3000/updatepost/" + id, fd);
+    }
   }
   deletePost(postId: string | undefined) {
     return this._httpService.delete("http://localhost:3000/deletepost/" + postId);

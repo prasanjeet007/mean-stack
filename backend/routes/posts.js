@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
     if (isValid) {
       error = null;
     }
-    cb(error, "./images");
+    cb(error, "images");
   },
   filename: (req, file, cb) => {
     const name = file.originalname.toLowerCase().split(" ").join("-");
@@ -29,7 +29,7 @@ router.post(
     const url = req.protocol + "://" + req.get("host");
     const post = new Post({
       ...req.body,
-      image: url + "/backend/images/" + req.file.filename,
+      image: url + "/" + req.file.filename,
     });
     const postResult = await post.save();
     res.send(postResult);
@@ -47,14 +47,23 @@ router.delete("/deletepost/:id", async (req, res) => {
   const postResult = await Post.findByIdAndDelete({ _id: req.params.id });
   res.send(postResult);
 });
-router.put("/updatepost/:id", async (req, res) => {
-  const updatedPostResult = await Post.findByIdAndUpdate(
-    { _id: req.params.id },
-    {
-      $set: { title: req.body.title, description: req.body.description },
-    },
-    { new: true }
-  );
-  res.send(updatedPostResult);
-});
+router.put(
+  "/updatepost/:id",
+  multer({ storage: storage }).single("image"),
+  async (req, res) => {
+    const url = req.protocol + "://" + req.get("host");
+    const updatedPostResult = await Post.findByIdAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          title: req.body.title,
+          description: req.body.description,
+          image: url + "/" + req.file.filename,
+        },
+      },
+      { new: true }
+    );
+    res.send(updatedPostResult);
+  }
+);
 module.exports = router;
