@@ -10,8 +10,9 @@ export class PostService {
   private posts: Post[] = [];
   postAddTrigger = new Subject();
   constructor(private _httpService: HttpClient) { }
-  getPosts() {
-    return this._httpService.get("http://localhost:3000/getposts");
+  getPosts(pageSize:number,currentPage:number) {
+    const queryParameters = `?pagesize=${pageSize}&page=${currentPage}`;
+    return this._httpService.get("http://localhost:3000/getposts" + queryParameters);
   }
   getPostById(id: string) {
     return this._httpService.get("http://localhost:3000/getpost/" + id);

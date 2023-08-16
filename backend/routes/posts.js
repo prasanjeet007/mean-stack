@@ -36,7 +36,13 @@ router.post(
   }
 );
 router.get("/getposts", async (req, res) => {
-  const postResult = await Post.find();
+  const pageSize = req.query.pagesize;
+  const currentPage = req.query.page;
+  const postQuery= Post.find();
+  if(pageSize && currentPage) {
+    postQuery.skip(pageSize * (currentPage-1)).limit(pageSize);
+  }
+  const postResult =  await postQuery;
   res.send(postResult);
 });
 router.get("/getpost/:id", async (req, res) => {

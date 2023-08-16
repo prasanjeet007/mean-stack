@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import { PostCreateComponent } from './post-create/post-create.component';
 import { PostsListComponent } from './posts-list/posts-list.component';
 import { PostsRoutingModule } from './posts-routing.module';
@@ -28,7 +29,9 @@ import { PostsRoutingModule } from './posts-routing.module';
     MatButtonModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
-    MatIconModule
+    MatPaginatorModule,
+    MatIconModule,
+    
   ]
 })
 export class PostsModule { }

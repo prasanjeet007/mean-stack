@@ -33,6 +33,10 @@
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
+    <mat-paginator [length]="totalPosts"
+              [pageSize]="postsPerPage"
+              [pageSizeOptions]="pageSizeOptions" (page)="onChangePage($event)">
+</mat-paginator>
   </ng-container>
   <ng-template #emptyList>
     <p class="no-post-list">No posts are available...</p>

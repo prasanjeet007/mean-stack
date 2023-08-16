@@ -47,19 +47,23 @@ export class PostCreateComponent {
         return;
       this.isLoading = true;
       this._postService.addPosts(this.postCreateForm.value.post_title, this.postCreateForm.value.post_description, this.postCreateForm.value.image).subscribe((postResult) => {
-        this.isLoading = false;
-        this._postService.postAddTrigger.next(true);
-        this.postCreateForm.reset();
-        this.deleteImage();
+        if(postResult){
+          this.isLoading = false;
+          this._postService.postAddTrigger.next(true);
+          this.postCreateForm.reset();
+          this.deleteImage();
+        }
       })
     } else {
       this._postService.editPost(this.postId, this.postCreateForm.value.post_title, this.postCreateForm.value.post_description, this.postCreateForm.value.image).subscribe((updatePostResponse) => {
+        if(updatePostResponse){
         this.isLoading = false;
         this._postService.postAddTrigger.next(true);
         this.postCreateForm.reset();
         this.deleteImage();
         this.btnText = "Save";
         this._route.navigateByUrl('/posts');
+        }
       });
     }
 

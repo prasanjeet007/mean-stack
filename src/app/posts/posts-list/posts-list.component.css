@@ -19,3 +19,6 @@
   width: 400px;
   height: 200px;
 }
+mat-paginator{
+  margin-top: 1rem;
+}
