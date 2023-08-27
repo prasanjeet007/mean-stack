@@ -39,11 +39,13 @@ router.get("/getposts", async (req, res) => {
   const pageSize = req.query.pagesize;
   const currentPage = req.query.page;
   const postQuery= Post.find();
+  const postCount = Post.count();
   if(pageSize && currentPage) {
     postQuery.skip(pageSize * (currentPage-1)).limit(pageSize);
   }
   const postResult =  await postQuery;
-  res.send(postResult);
+  const postCountResult = await postCount;
+  res.send({postResult,postCountResult});
 });
 router.get("/getpost/:id", async (req, res) => {
   const postResult = await Post.findById({ _id: req.params.id });

@@ -3,10 +3,10 @@
   <ng-container *ngIf="!isLoading">
     <mat-accordion
       multi="true"
-      *ngIf="(postsList | async)?.length > 0; else emptyList"
+      *ngIf="(postsList | async)?.postResult?.length > 0; else emptyList"
     >
       <mat-expansion-panel
-        *ngFor="let post of postsList | async as listPost; trackBy: trackPost"
+        *ngFor="let post of (postsList | async)?.postResult as listPost; trackBy: trackPost"
         (opened)="panelOpenState = true"
         (closed)="panelOpenState = false"
       >
@@ -33,7 +33,7 @@
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
-    <mat-paginator [length]="totalPosts"
+    <mat-paginator [length]="(postsList | async)?.postCountResult"
               [pageSize]="postsPerPage"
               [pageSizeOptions]="pageSizeOptions" (page)="onChangePage($event)">
 </mat-paginator>
