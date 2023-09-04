@@ -1,3 +1,11 @@
 .header {
     margin: 0 0 10px 0;
 }
+.nav-list{
+    list-style-type: none;
+    position: relative;
+    left: 950px;
+}
+.nav-list li a{
+    cursor: pointer;
+}

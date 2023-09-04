@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/posts', pathMatch: "full" },
-  { path: 'posts', loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule) }
+  { path: 'posts', loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule) },
+  {path:'login',component:LoginComponent},
 ];
 
 @NgModule({
