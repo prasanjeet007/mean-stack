@@ -7,8 +7,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(private _router:Router){}
-  login(){
+  constructor(private _router: Router) { }
+  login() {
     this._router.navigateByUrl('/login');
+  }
+  signUp() {
+    this._router.navigateByUrl('/signup');
   }
 }

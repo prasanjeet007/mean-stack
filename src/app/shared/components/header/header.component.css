@@ -1,11 +1,18 @@
 .header {
     margin: 0 0 10px 0;
 }
-.nav-list{
+
+.nav-list {
+    display: flex;
     list-style-type: none;
     position: relative;
-    left: 950px;
+    left: 700px;
 }
-.nav-list li a{
+
+.nav-list li {
+    margin: 5px;
+}
+
+.nav-list li a {
     cursor: pointer;
 }

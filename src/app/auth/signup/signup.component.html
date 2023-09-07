@@ -1,0 +1,33 @@
+<mat-card class="form-container">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form class="example-form" [formGroup]="signUpFromCreate" *ngIf="!isLoading">
+        <mat-form-field class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email.." formControlName="email" />
+            <mat-error *ngIf="
+          signUpFromCreate.get('email')?.invalid &&
+          signUpFromCreate.get('email')?.touched
+          ">
+                Please enter a Email...
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Password</mat-label>
+            <textarea matInput placeholder="Password..." formControlName="password"></textarea>
+            <mat-error *ngIf="
+          signUpFromCreate.get('password')?.invalid &&
+          signUpFromCreate.get('password')?.touched
+          ">
+                Please enter Description...
+            </mat-error>
+        </mat-form-field>
+        <div class="form-btn">
+            <button mat-raised-button color="primary" (click)="login()">
+                Sign Up</button>&nbsp;
+            <button mat-raised-button color="warn" (click)="resetForm()">
+                Reset
+            </button>
+        </div>
+    </form>
+</mat-card>
