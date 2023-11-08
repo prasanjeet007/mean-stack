@@ -14,7 +14,7 @@
 
         <mat-form-field class="example-full-width">
             <mat-label>Password</mat-label>
-            <textarea matInput placeholder="Password..." formControlName="password"></textarea>
+            <input type="password" matInput placeholder="Password..." formControlName="password" />
             <mat-error *ngIf="
           signUpFromCreate.get('password')?.invalid &&
           signUpFromCreate.get('password')?.touched
@@ -23,7 +23,7 @@
             </mat-error>
         </mat-form-field>
         <div class="form-btn">
-            <button mat-raised-button color="primary" (click)="login()">
+            <button mat-raised-button color="primary" (click)="signUp()">
                 Sign Up</button>&nbsp;
             <button mat-raised-button color="warn" (click)="resetForm()">
                 Reset

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -9,17 +10,19 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class SignupComponent {
   signUpFromCreate!: FormGroup;
   isLoading = false;
-  constructor() {
-    this.loginFormCreate();
+  constructor(private _authService: AuthService) {
+    this.signUpFormCreate();
   }
-  loginFormCreate() {
+  signUpFormCreate() {
     this.signUpFromCreate = new FormGroup({
       email: new FormControl(''),
       password: new FormControl('')
     })
   }
-  login() {
-    console.log('login sucess');
+  signUp() {
+    this._authService.createUser(this.signUpFromCreate.value.email, this.signUpFromCreate.value.password).subscribe((res) => {
+      console.log('response of signup', res);
+    })
   }
   resetForm() {
     this.signUpFromCreate.reset();
