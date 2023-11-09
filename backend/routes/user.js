@@ -1,5 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 const User = require("../models/user");
 const { async } = require("rxjs");
@@ -18,6 +19,30 @@ router.post("/signup", (req, res, next) => {
         res.send(err);
       });
   });
+});
+router.post("/login", async (req, res, next) => {
+  const loginUser = await User.findOne({ email: req.body.email });
+  if (loginUser) {
+    const loginPass = await bcrypt.compare(req.body.password, loginUser.hash);
+    if (loginPass) {
+      res.status(200).json({
+        Success: true,
+        Result: "Authentication Successful",
+      });
+      const token = jwt.sign(
+        { email: loginUser.email, userId: loginUser._id },
+        "userlogindeatisltoken",
+        {
+          expiresIn: "1hr",
+        }
+      );
+    }
+  } else {
+    res.status(401).json({
+      Success: false,
+      Result: "Authentication Failed",
+    });
+  }
 });
 // router.get("/getposts", async (req, res) => {
 //   const pageSize = req.query.pagesize;
