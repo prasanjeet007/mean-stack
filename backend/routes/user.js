@@ -23,24 +23,28 @@ router.post("/signup", (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   const loginUser = await User.findOne({ email: req.body.email });
   if (loginUser) {
-    const loginPass = await bcrypt.compare(req.body.password, loginUser.hash);
+    const loginPass = await bcrypt.compare(
+      req.body.password,
+      loginUser.password
+    );
     if (loginPass) {
-      res.status(200).json({
-        Success: true,
-        Result: "Authentication Successful",
-      });
       const token = jwt.sign(
         { email: loginUser.email, userId: loginUser._id },
-        "userlogindeatisltoken",
+        "userlogindetailstoken",
         {
           expiresIn: "1hr",
         }
       );
+      res.status(200).json({
+        success: true,
+        token: token,
+        result: "Authenticaltion Successful",
+      });
     }
   } else {
     res.status(401).json({
-      Success: false,
-      Result: "Authentication Failed",
+      success: false,
+      result: "Authentication Failed",
     });
   }
 });

@@ -22,8 +22,10 @@ const storage = multer.diskStorage({
   },
 });
 const Post = require("../models/post");
+const checkAuth = require("../middleware/check-auth");
 router.post(
   "/createpost",
+  checkAuth,
   multer({ storage: storage }).single("image"),
   async (req, res) => {
     const url = req.protocol + "://" + req.get("host");
@@ -35,28 +37,29 @@ router.post(
     res.send(postResult);
   }
 );
-router.get("/getposts", async (req, res) => {
+router.get("/getposts", checkAuth, async (req, res) => {
   const pageSize = req.query.pagesize;
   const currentPage = req.query.page;
-  const postQuery= Post.find();
+  const postQuery = Post.find();
   const postCount = Post.count();
-  if(pageSize && currentPage) {
-    postQuery.skip(pageSize * (currentPage-1)).limit(pageSize);
+  if (pageSize && currentPage) {
+    postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
   }
-  const postResult =  await postQuery;
+  const postResult = await postQuery;
   const postCountResult = await postCount;
-  res.send({postResult,postCountResult});
+  res.send({ postResult, postCountResult });
 });
-router.get("/getpost/:id", async (req, res) => {
+router.get("/getpost/:id", checkAuth, async (req, res) => {
   const postResult = await Post.findById({ _id: req.params.id });
   res.send(postResult);
 });
-router.delete("/deletepost/:id", async (req, res) => {
+router.delete("/deletepost/:id", checkAuth, async (req, res) => {
   const postResult = await Post.findByIdAndDelete({ _id: req.params.id });
   res.send(postResult);
 });
 router.put(
   "/updatepost/:id",
+  checkAuth,
   multer({ storage: storage }).single("image"),
   async (req, res) => {
     const url = req.protocol + "://" + req.get("host");

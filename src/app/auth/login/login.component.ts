@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { map } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,21 +10,26 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginFromCreate!:FormGroup;
-  isLoading=false;
-  constructor(){
+  loginFromCreate!: FormGroup;
+  isLoading = false;
+  constructor(private _authService: AuthService, private _routerService: Router) {
     this.loginFormCreate();
   }
-  loginFormCreate(){
+  loginFormCreate() {
     this.loginFromCreate = new FormGroup({
-      email:new FormControl(''),
-      password:new FormControl('')
+      email: new FormControl(''),
+      password: new FormControl('')
     })
   }
-  login(){
-    console.log('login sucess');
+  login() {
+    // console.log('login sucess');
+    this._authService.login(this.loginFromCreate.value.email, this.loginFromCreate.value.password).pipe(map((res: any) => res.token)).subscribe((response) => {
+      localStorage.setItem('token', JSON.stringify(response));
+      this._routerService.navigate(['/posts']);
+    })
   }
-  resetForm(){
+
+  resetForm() {
     this.loginFromCreate.reset();
   }
 }
