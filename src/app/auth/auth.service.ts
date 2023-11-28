@@ -11,7 +11,8 @@ export class AuthService {
     return this._httpService.post('http://localhost:3000/signup', { email, password });
   }
   getToken() {
-    return JSON.parse(localStorage.getItem('token') || '{}');
+    if (localStorage.getItem('token'))
+      return JSON.parse(localStorage.getItem('token') || '');
   }
   login(email: string, password: string) {
     return this._httpService.post("http://localhost:3000/login", { email, password });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
@@ -9,11 +9,16 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginFromCreate!: FormGroup;
   isLoading = false;
   constructor(private _authService: AuthService, private _routerService: Router) {
     this.loginFormCreate();
+  }
+  ngOnInit(): void {
+    if (this._authService.getToken()) {
+      this._routerService.navigateByUrl('/posts');
+    }
   }
   loginFormCreate() {
     this.loginFromCreate = new FormGroup({

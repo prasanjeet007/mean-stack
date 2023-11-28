@@ -1,11 +1,14 @@
 <mat-toolbar color="primary" class="header">
     <span>My Application</span>
     <ul class="nav-list">
-        <li>
+        <li *ngIf="!isAuthenticated">
             <a mat-button routerLinkActive="mat-accent" (click)="login()">Login</a>
         </li>
-        <li>
+        <li *ngIf="!isAuthenticated">
             <a mat-button routerLinkActive="mat-accent" (click)="signUp()">Sign Up</a>
+        </li>
+        <li *ngIf="isAuthenticated">
+            <a mat-button routerLinkActive="mat-accent" (click)="logout()">Logout</a>
         </li>
     </ul>
 </mat-toolbar>
