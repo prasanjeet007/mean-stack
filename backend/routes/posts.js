@@ -32,6 +32,7 @@ router.post(
     const post = new Post({
       ...req.body,
       image: url + "/" + req.file.filename,
+      creator: req.userData.userId,
     });
     const postResult = await post.save();
     res.send(postResult);

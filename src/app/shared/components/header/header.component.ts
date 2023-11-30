@@ -22,7 +22,6 @@ export class HeaderComponent implements OnInit {
     this._router.navigateByUrl('/signup');
   }
   logout() {
-    localStorage.removeItem('token');
-    this._router.navigate(['/login']);
+    this._authService.logout();
   }
 }

@@ -1,6 +1,7 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Post } from 'src/app/models/post.model';
 import { PostService } from '../post-service/post.service';
 
@@ -9,7 +10,7 @@ import { PostService } from '../post-service/post.service';
   templateUrl: './post-create.component.html',
   styleUrls: ['./post-create.component.css']
 })
-export class PostCreateComponent {
+export class PostCreateComponent implements OnInit {
   @ViewChild('filePicker') filePicker!: ElementRef;
   postCreateForm!: FormGroup;
   postData!: Post;
@@ -17,7 +18,7 @@ export class PostCreateComponent {
   postId!: string;
   isLoading: boolean = false;
   imagePreview!: string;
-  constructor(private _postService: PostService, private _activatedRouterService: ActivatedRoute, private _route: Router) {
+  constructor(private _postService: PostService, private _activatedRouterService: ActivatedRoute, private _route: Router, private _authService: AuthService) {
     this.createPostForm();
     this._activatedRouterService.params.subscribe((paramResponse) => {
       if (paramResponse["id"]) {
@@ -34,6 +35,8 @@ export class PostCreateComponent {
       }
     })
   }
+  ngOnInit(): void {
+  }
   createPostForm() {
     this.postCreateForm = new FormGroup({
       post_title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(10)]),
@@ -47,7 +50,7 @@ export class PostCreateComponent {
         return;
       this.isLoading = true;
       this._postService.addPosts(this.postCreateForm.value.post_title, this.postCreateForm.value.post_description, this.postCreateForm.value.image).subscribe((postResult) => {
-        if(postResult){
+        if (postResult) {
           this.isLoading = false;
           this._postService.postAddTrigger.next(true);
           this.postCreateForm.reset();
@@ -56,13 +59,13 @@ export class PostCreateComponent {
       })
     } else {
       this._postService.editPost(this.postId, this.postCreateForm.value.post_title, this.postCreateForm.value.post_description, this.postCreateForm.value.image).subscribe((updatePostResponse) => {
-        if(updatePostResponse){
-        this.isLoading = false;
-        this._postService.postAddTrigger.next(true);
-        this.postCreateForm.reset();
-        this.deleteImage();
-        this.btnText = "Save";
-        this._route.navigateByUrl('/posts');
+        if (updatePostResponse) {
+          this.isLoading = false;
+          this._postService.postAddTrigger.next(true);
+          this.postCreateForm.reset();
+          this.deleteImage();
+          this.btnText = "Save";
+          this._route.navigateByUrl('/posts');
         }
       });
     }
@@ -87,6 +90,7 @@ export class PostCreateComponent {
       this._route.navigateByUrl('/');
     }
   }
+
   deleteImage() {
     this.imagePreview = '';
     if (this.filePicker)

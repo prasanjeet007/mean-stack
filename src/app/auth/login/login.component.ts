@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
     })
   }
   login() {
-    // console.log('login sucess');
     this._authService.login(this.loginFromCreate.value.email, this.loginFromCreate.value.password).pipe(map((res: any) => res.token)).subscribe((response) => {
       localStorage.setItem('token', JSON.stringify(response));
       this._routerService.navigate(['/posts']);
