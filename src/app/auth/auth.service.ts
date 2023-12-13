@@ -14,14 +14,14 @@ export class AuthService {
     return this._httpService.post('http://localhost:3000/signup', { email, password });
   }
   getToken() {
-    if (localStorage.getItem('token'))
-      return JSON.parse(localStorage.getItem('token') || '');
+    if (sessionStorage.getItem('token'))
+      return JSON.parse(sessionStorage.getItem('token') || '');
   }
   login(email: string, password: string) {
     return this._httpService.post("http://localhost:3000/login", { email, password });
   }
   logout() {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     this._routerService.navigate(['/login']);
   }
 }

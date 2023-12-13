@@ -55,7 +55,10 @@ router.get("/getpost/:id", checkAuth, async (req, res) => {
   res.send(postResult);
 });
 router.delete("/deletepost/:id", checkAuth, async (req, res) => {
-  const postResult = await Post.findByIdAndDelete({ _id: req.params.id });
+  const postResult = await Post.findByIdAndDelete({
+    _id: req.params.id,
+    creator: req.userData.userId,
+  });
   res.send(postResult);
 });
 router.put(
@@ -65,7 +68,7 @@ router.put(
   async (req, res) => {
     const url = req.protocol + "://" + req.get("host");
     const updatedPostResult = await Post.findByIdAndUpdate(
-      { _id: req.params.id },
+      { _id: req.params.id, creator: req.userData.userId },
       {
         $set: {
           title: req.body.title,

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { AuthService } from '../auth.service';
 export class SignupComponent {
   signUpFromCreate!: FormGroup;
   isLoading = false;
-  constructor(private _authService: AuthService) {
+  constructor(private _authService: AuthService, private _routerService: Router) {
     this.signUpFormCreate();
   }
   signUpFormCreate() {
@@ -20,8 +21,13 @@ export class SignupComponent {
     })
   }
   signUp() {
+    this.isLoading = true;
     this._authService.createUser(this.signUpFromCreate.value.email, this.signUpFromCreate.value.password).subscribe((res) => {
-      console.log('response of signup', res);
+      this._routerService.navigate(['/login']);
+      this.isLoading = false;
+    }, (err) => {
+      console.log('error', err);
+      this.isLoading = false;
     })
   }
   resetForm() {

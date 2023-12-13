@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AuthIntercepter } from './auth/auth-intercepter';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { ErrorInterceptor } from './error-interceptor';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -37,7 +38,8 @@ import { SharedModule } from './shared/shared.module';
     MatIconModule,
     MatProgressSpinnerModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthIntercepter, multi: true }],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthIntercepter, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
