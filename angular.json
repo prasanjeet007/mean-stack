@@ -61,10 +61,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "mean-stack:build:production"
+              "buildTarget": "mean-stack:build:production"
             },
             "development": {
-              "browserTarget": "mean-stack:build:development"
+              "buildTarget": "mean-stack:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -72,7 +72,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mean-stack:build"
+            "buildTarget": "mean-stack:build"
           }
         },
         "test": {
