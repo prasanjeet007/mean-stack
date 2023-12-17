@@ -7,8 +7,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthIntercepter } from './auth/auth-intercepter';
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
+import { AuthModule } from './auth/auth.module';
 import { ErrorDialogComponent } from './error/error-dialog/error-dialog.component';
 import { ErrorInterceptor } from './error/error-dialog/error-interceptor';
 import { SharedModule } from './shared/shared.module';
@@ -16,8 +15,6 @@ import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    SignupComponent,
     ErrorDialogComponent
   ],
   imports: [
@@ -27,6 +24,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
+    AuthModule,
     AngularMaterialModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthIntercepter, multi: true },

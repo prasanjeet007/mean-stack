@@ -34,16 +34,31 @@ exports.deletePostById = async (req, res) => {
 };
 exports.updatePostById = async (req, res) => {
   const url = req.protocol + "://" + req.get("host");
-  const updatedPostResult = await Post.findByIdAndUpdate(
-    { _id: req.params.id, creator: req.userData.userId },
-    {
-      $set: {
-        title: req.body.title,
-        description: req.body.description,
-        image: url + "/" + req.file.filename,
+  if (req.file) {
+    const updatedPostResult = await Post.findByIdAndUpdate(
+      { _id: req.params.id, creator: req.userData.userId },
+      {
+        $set: {
+          title: req.body.title,
+          description: req.body.description,
+          image: url + "/" + req.file.filename,
+        },
       },
-    },
-    { new: true }
-  );
-  res.send(updatedPostResult);
+      { new: true }
+    );
+    res.send(updatedPostResult);
+  } else {
+    const updatedPostResult = await Post.findByIdAndUpdate(
+      { _id: req.params.id, creator: req.userData.userId },
+      {
+        $set: {
+          title: req.body.title,
+          description: req.body.description,
+          image: req.body.image,
+        },
+      },
+      { new: true }
+    );
+    res.send(updatedPostResult);
+  }
 };

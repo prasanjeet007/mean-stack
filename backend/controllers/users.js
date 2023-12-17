@@ -27,7 +27,7 @@ exports.loginUser = async (req, res, next) => {
     if (loginPass) {
       const token = jwt.sign(
         { email: loginUser.email, userId: loginUser._id },
-        "userlogindetailstoken",
+        process.env.JWT_KEY,
         {
           expiresIn: "1hr",
         }

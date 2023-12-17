@@ -14,14 +14,22 @@ export class HeaderComponent implements OnInit {
     if (this._authService.getToken()) {
       this.isAuthenticated = true;
     }
+    this._authService.authenticated.subscribe((authenticateResponse) => {
+      if (authenticateResponse) {
+        this.isAuthenticated = true;
+      } else {
+        this.isAuthenticated = false;
+      }
+    })
   }
   login() {
-    this._router.navigateByUrl('/login');
+    this._router.navigateByUrl('/auth/login');
   }
   signUp() {
-    this._router.navigateByUrl('/signup');
+    this._router.navigateByUrl('/auth/signup');
   }
   logout() {
     this._authService.logout();
+    this._authService.authenticated.next(false);
   }
 }
